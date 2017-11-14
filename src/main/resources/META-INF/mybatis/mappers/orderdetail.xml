@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="kr.co.hangsho.orders.mappers.OrderDetailMapper">
+
+	<sql id="test1">
+		OD.order_id as "order.id",
+		OD.product_detail_id "productDetail.id",
+		OD.order_quantity orderQuantity
+	</sql>
+	<sql id="test2">		O.ORDER_CONDITION "order.condition",
+		O.ORDER_DATE "order.orderDate",
+		O.ORDER_MESSAGE "order.message",
+		O.ORDER_PRICE "order.price"</sql>
+<sql id="test3">		PD.PRODUCT_ID "productDetail.product.id",
+		PD.PRODUCT_DETAIL_PRICE "productDetail.price", 
+		PD.IMAGE_ID "productDetail.image.id", 
+		PD.INITIAL_QUANTITY "productDetail.initialQuantity", 
+		PD.SALED_QUANTITY "productDetail.saledQuantity", 
+		PD.PRODUCT_DETAIL_OPTION "productDetail.option"</sql>
+<sql id="test4">		P.PRODUCT_SHOW "productDetail.product.show",
+		P.PRODUCT_NAME "productDetail.product.name",
+		P.DISCOUNT_RATIO "productDetail.product.discountRatio", 
+		P.DELIVERY_FEE "productDetail.product.deliveryFee", 
+		P.COMPANY_ID "productDetail.product.company.id", 
+		P.PRODUCT_CLICKED "productDetail.product.clicked", 
+		P.IMAGE_ID "productDetail.product.image.id",
+		P.SMALL_CATEGORY_ID "productDetail.product.smallCategory.id",
+		P.PRODUCT_DESCRIPTION "productDetail.product.description"</sql>
+
+<select id="getOrderDetailsByCustomer" resultType="OrderDetail" parameterType="Customer">
+
+	select 
+<include refid="test1"><property name="" value="OD"/></include>,
+<include refid="test2"><property name="" value="O"/></include>,
+<include refid="test3"><property name="" value="PD"/></include>,
+<include refid="test4"><property name="" value="P"/></include>
+from ORDER_DETAILS OD, orders O, PRODUCT_DETAILS PD, PRODUCTS P
+where OD.order_id  = O.order_id and O.CUSTOMER_ID = 1 and OD.PRODUCT_DETAIL_ID = PD.PRODUCT_DETAIL_ID and PD.PRODUCT_ID = P.PRODUCT_ID
+order by OD.order_id;
+
+	</select>
+
+<!-- 	<select id="getOrderDetailsByCustomer" resultType="OrderDetail" parameterType="Customer">
+	select 
+		OD.order_id as "order.id",
+		OD.product_detail_id "productDetail.id",
+		OD.order_quantity orderQuantity,
+		O.ORDER_CONDITION "order.condition",
+		O.ORDER_DATE "order.orderDate",
+		O.ORDER_MESSAGE "order.message",
+		O.ORDER_PRICE "order.price",
+		PD.PRODUCT_ID "productDetail.product.id",
+		PD.PRODUCT_DETAIL_PRICE "productDetail.price", 
+		PD.IMAGE_ID "productDetail.image.id", 
+		PD.INITIAL_QUANTITY "productDetail.initialQuantity", 
+		PD.SALED_QUANTITY "productDetail.saledQuantity", 
+		PD.PRODUCT_DETAIL_OPTION "productDetail.option",
+		P.PRODUCT_SHOW "productDetail.product.show",
+		P.PRODUCT_NAME "productDetail.product.name",
+		P.DISCOUNT_RATIO "productDetail.product.discountRatio", 
+		P.DELIVERY_FEE "productDetail.product.deliveryFee", 
+		P.COMPANY_ID "productDetail.product.company.id", 
+		P.PRODUCT_CLICKED "productDetail.product.clicked", 
+		P.IMAGE_ID "productDetail.product.image.id",
+		P.SMALL_CATEGORY_ID "productDetail.product.smallCategory.id",
+		P.PRODUCT_DESCRIPTION "productDetail.product.description"
+from ORDER_DETAILS OD, orders O, PRODUCT_DETAILS PD, PRODUCTS P
+where OD.order_id  = O.order_id and O.CUSTOMER_ID = 1 and OD.PRODUCT_DETAIL_ID = PD.PRODUCT_DETAIL_ID and PD.PRODUCT_ID = P.PRODUCT_ID
+order by OD.order_id;
+	</select> -->
+	
+</mapper>
